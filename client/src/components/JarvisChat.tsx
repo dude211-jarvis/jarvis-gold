@@ -191,7 +191,9 @@ export default function JarvisChat({ voice }: { voice: Voice }) {
         )}
 
         {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.role === "user" ? "justify-start" : "justify-end"} w-full`}>
+          <div
+            key={i}
+            className={`flex ${m.role === "user" ? "justify-start" : "justify-end"} w-full shrink-0`}>
             <div
               className={`max-w-[85%] rounded-lg border p-2.5 ${
                 m.role === "user"
@@ -231,7 +233,7 @@ export default function JarvisChat({ voice }: { voice: Voice }) {
         ))}
 
         {chat.isPending && (
-          <div className="flex w-full justify-end">
+          <div className="flex w-full shrink-0 justify-end">
             <div className="max-w-[85%] rounded-lg border border-cyan-400/25 bg-cyan-400/5 p-2.5">
               <span className="font-tech text-[10px] tracking-widest text-cyan-300/80">J.A.R.V.I.S</span>
               <p className="mt-1 flex items-center gap-2 font-cairo text-sm text-muted-foreground">
