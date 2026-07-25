@@ -3,7 +3,7 @@ services:
     name: jarvis-gold
     runtime: node
     plan: free
-    buildCommand: npm install -g pnpm@10 && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: npx -y pnpm@10 install --frozen-lockfile && npx -y pnpm@10 build
     startCommand: node dist/index.js
     healthCheckPath: /
     envVars:
