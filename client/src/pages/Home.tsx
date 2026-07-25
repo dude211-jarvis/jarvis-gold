@@ -31,14 +31,12 @@ export default function Home() {
       greeted.current = true;
       const q = quoteRef.current;
       let briefing =
-        "Good day, Commander. JARVIS online. All systems operational. Gold market surveillance is active.";
+        "أهلاً بك يا سيدي. جارفس في الخدمة، جميع الأنظمة تعمل بكفاءة، ومراقبة سوق الذهب نشطة الآن.";
       if (q) {
-        const dir = q.change >= 0 ? "up" : "down";
-        briefing += ` Gold is currently trading at ${Math.round(q.price)} dollars, ${dir} ${Math.abs(
+        const dir = q.change >= 0 ? "مرتفعاً" : "منخفضاً";
+        briefing += ` يتداول الذهب حالياً عند ${Math.round(q.price)} دولاراً، ${dir} بنسبة ${Math.abs(
           q.changePercent
-        ).toFixed(2)} percent today, ranging between ${Math.round(q.dayLow)} and ${Math.round(
-          q.dayHigh
-        )} dollars.`;
+        ).toFixed(2)} بالمئة اليوم، بين ${Math.round(q.dayLow)} و${Math.round(q.dayHigh)} دولاراً.`;
       }
       voice.speak(briefing);
       window.removeEventListener("pointerdown", greet);

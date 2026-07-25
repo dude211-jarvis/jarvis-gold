@@ -66,7 +66,7 @@ export const appRouter = router({
         return { reply };
       }),
 
-    /** Arabic reply → short spoken-English JARVIS briefing for TTS. */
+    /** Arabic reply → cleaned full Arabic text ready for TTS (no summarizing). */
     speechText: publicProcedure
       .input(z.object({ text: z.string().min(1).max(6000) }))
       .mutation(async ({ input }) => {
@@ -79,7 +79,7 @@ export const appRouter = router({
      * Returns base64 WAV. Client falls back to browser speechSynthesis on error.
      */
     tts: publicProcedure
-      .input(z.object({ text: z.string().min(1).max(2000) }))
+      .input(z.object({ text: z.string().min(1).max(6000) }))
       .mutation(async ({ input }) => {
         const { audioBase64, mimeType } = await geminiTts(input.text);
         return { audioBase64, mimeType };

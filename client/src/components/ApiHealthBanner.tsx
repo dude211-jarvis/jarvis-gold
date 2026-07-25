@@ -19,8 +19,8 @@ export default function ApiHealthBanner({ voice }: { voice: Voice }) {
       announced.current = true;
       voice.speak(
         data!.status === "quota_exhausted"
-          ? "Sir, I must inform you: the Gemini API quota has been exhausted. Please review your Google AI Studio account."
-          : "Sir, the Gemini API key appears to be invalid. Please issue a new key from Google AI Studio."
+          ? "سيدي، يجب أن أبلغك: لقد استُنفدت حصة مفتاح جيميناي. يرجى مراجعة حسابك في جوجل إيه آي ستوديو."
+          : "سيدي، يبدو أن مفتاح جيميناي غير صالح. يرجى إنشاء مفتاح جديد من جوجل إيه آي ستوديو."
       );
     }
     if (!critical) announced.current = false;

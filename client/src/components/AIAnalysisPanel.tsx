@@ -1,5 +1,5 @@
 /**
- * Daily AI analysis in Arabic + a speak button that reads an English
+ * Daily AI analysis in Arabic + a speak button that reads an Arabic
  * briefing aloud (JARVIS voice).
  */
 import { trpc } from "@/lib/trpc";
@@ -18,30 +18,28 @@ function ImpactIcon({ impact }: { impact: string }) {
   return <Minus className="h-3.5 w-3.5 text-cyan-300" />;
 }
 
-/** Build a short English spoken briefing from the Arabic analysis + live quote. */
-function buildEnglishBriefing(opts: {
+/** Build a spoken Arabic briefing from the analysis + live quote. */
+function buildArabicBriefing(opts: {
   price?: number;
   changePercent?: number;
   bias?: string;
   rsi?: number | null;
 }): string {
   const { price, changePercent, bias, rsi } = opts;
-  const dir =
-    changePercent == null ? "" : changePercent >= 0 ? "up" : "down";
-  const biasEn =
-    bias === "صاعد" ? "bullish" : bias === "هابط" ? "bearish" : "neutral";
-  const parts: string[] = ["Good day, sir. This is your gold market briefing."];
+  const dir = changePercent == null ? "" : changePercent >= 0 ? "مرتفعاً" : "منخفضاً";
+  const biasAr = bias === "صاعد" ? "صاعد" : bias === "هابط" ? "هابط" : "محايد";
+  const parts: string[] = ["أهلاً يا سيدي، هذا موجز سوق الذهب."];
   if (price != null) {
     parts.push(
-      `Gold is currently trading at ${price.toFixed(0)} dollars per ounce, ${dir} ${Math.abs(changePercent ?? 0).toFixed(2)} percent on the day.`
+      `يتداول الذهب حالياً عند ${price.toFixed(0)} دولاراً للأونصة، ${dir} بنسبة ${Math.abs(changePercent ?? 0).toFixed(2)} بالمئة اليوم.`
     );
   }
-  parts.push(`The overall technical bias is ${biasEn}.`);
+  parts.push(`الاتجاه الفني العام ${biasAr}.`);
   if (rsi != null) {
-    const zone = rsi >= 70 ? "overbought territory" : rsi <= 30 ? "oversold territory" : "neutral territory";
-    parts.push(`The relative strength index reads ${rsi.toFixed(0)}, in ${zone}.`);
+    const zone = rsi >= 70 ? "منطقة التشبع الشرائي" : rsi <= 30 ? "منطقة التشبع البيعي" : "المنطقة المحايدة";
+    parts.push(`مؤشر القوة النسبية عند ${rsi.toFixed(0)}، في ${zone}.`);
   }
-  parts.push("Full analysis is displayed on your dashboard. At your service, sir.");
+  parts.push("التحليل الكامل معروض أمامك على الشاشة. في خدمتك دائماً يا سيدي.");
   return parts.join(" ");
 }
 
@@ -59,7 +57,7 @@ export default function AIAnalysisPanel({ voice }: { voice: Voice }) {
       return;
     }
     voice.speak(
-      buildEnglishBriefing({
+      buildArabicBriefing({
         price: q?.price,
         changePercent: q?.changePercent,
         bias: chart?.technical.bias,
@@ -86,7 +84,7 @@ export default function AIAnalysisPanel({ voice }: { voice: Voice }) {
           {voice.supported && (
             <button
               onClick={onSpeak}
-              title={voice.speaking ? "إيقاف الصوت" : "استمع للملخص بصوت JARVIS (إنجليزي)"}
+              title={voice.speaking ? "إيقاف الصوت" : "استمع للملخص بصوت جارفس"}
               className={`flex h-7 items-center gap-1.5 rounded border px-2 font-tech text-[11px] tracking-wider transition-all duration-150 active:scale-95 ${
                 voice.speaking
                   ? "border-yellow-400/60 bg-yellow-400/10 text-yellow-300"

@@ -87,7 +87,7 @@ export function useJarvisVoice() {
       setSpeaking(true);
       try {
         // Premium Algenib voice via the user's own Gemini key
-        const res = await ttsRef.current.mutateAsync({ text: text.slice(0, 2000) });
+        const res = await ttsRef.current.mutateAsync({ text: text.slice(0, 6000) });
         if (reqIdRef.current !== myId) return; // superseded by a newer speak/stop
         const audio = new Audio(`data:${res.mimeType};base64,${res.audioBase64}`);
         audioRef.current = audio;

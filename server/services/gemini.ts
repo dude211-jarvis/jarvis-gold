@@ -234,7 +234,7 @@ export async function geminiTts(text: string): Promise<{ audioBase64: string; mi
       {
         parts: [
           {
-            text: `Say in a calm, refined, commanding AI-assistant tone, like a loyal British butler: ${text}`,
+            text: `اقرأ النص التالي بالعربية الفصحى بنبرة هادئة راقية واثقة كمساعد ذكي وفيّ (بأسلوب جارفس)، بوضوح وسرعة طبيعية، وانطق الأرقام بالعربية: ${text}`,
           },
         ],
       },

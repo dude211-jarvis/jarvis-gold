@@ -209,7 +209,7 @@ export default function JarvisChat({ voice }: { voice: Voice }) {
                   <button
                     onClick={() => onSpeakReply(i, m.content)}
                     disabled={speechText.isPending && speakingIdx !== i}
-                    title="استمع لملخص الرد بصوت جارفس (إنجليزي)"
+                    title="استمع للرد كاملاً بصوت جارفس"
                     className="text-muted-foreground transition-colors hover:text-yellow-300 disabled:opacity-40">
                     {speechText.isPending && speakingIdx === i ? (
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />

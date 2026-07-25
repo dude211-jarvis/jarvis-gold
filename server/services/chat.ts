@@ -133,15 +133,17 @@ export async function chatWithJarvis(history: ChatMessage[]): Promise<string> {
 }
 
 /**
- * Convert an Arabic assistant reply into a short spoken-English
- * JARVIS-style briefing suitable for TTS (voice output is English-only).
+ * Prepare an Arabic assistant reply for TTS: strip markdown symbols locally
+ * (no LLM call, no summarizing, no translation) so the JARVIS voice speaks
+ * the FULL reply in Arabic exactly as written.
  */
 export async function toEnglishSpeech(arabicText: string): Promise<string> {
-  const result = await geminiGenerate({
-    systemInstruction:
-      "You are J.A.R.V.I.S. Convert the given Arabic financial message into a short spoken English briefing (2-4 sentences max). Keep all numbers and figures exact. Speak naturally as JARVIS addressing 'sir'. Output ONLY the English text to be spoken — no markdown, no symbols like * or #, no preamble.",
-    messages: [{ role: "user", parts: [{ text: arabicText }] }],
-    maxOutputTokens: 2000,
-  });
-  return result.text.trim() || "I'm sorry sir, I could not prepare the voice briefing.";
+  const cleaned = arabicText
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[*_#>`~|]+/g, " ")
+    .replace(/^\s*[-•]\s*/gm, "")
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+  return cleaned || arabicText.trim();
 }
